@@ -1,13 +1,11 @@
 import axios from 'axios';
+import publicStore from '../stores/publicStore';
 
-const createInstance = (hostUrl: string) => {
-    console.log('[AxiosFactory] Factory is activated');
-    if (hostUrl === '') {
-        console.log(`[AxiosFactory] Instance is created, but host is not ready`);
-    }
+const createInstance = () => {
+    console.log(`[AxiosFactory] Server host : "${publicStore.hostUrl}"`);
 
     const instance = axios.create({
-        baseURL: hostUrl,
+        baseURL: publicStore.hostUrl,
         headers: {
             'Cache-Control': 'no-cache',
             Pragma: 'no-cache',
@@ -17,9 +15,6 @@ const createInstance = (hostUrl: string) => {
 
     instance.interceptors.request.use(
         async (config) => {
-            config.headers = {
-                'Content-Type': 'application/json',
-            };
             return config;
         },
         (error) => {
@@ -39,10 +34,10 @@ const createInstance = (hostUrl: string) => {
 	return instance;
 };
 
-let Instance = createInstance('');
+let Instance = createInstance();
 
-const initInstance = (hostUrl: string) => {
-    Instance = createInstance(hostUrl);
+const initInstance = () => {
+    Instance = createInstance();
 };
 
 export {
