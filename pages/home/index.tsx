@@ -4,12 +4,13 @@ import { styled } from 'styled-components/native';
 import testApiService from '../../services/testApiService';
 import publicStore from '../../stores/publicStore';
 import FastImage from 'react-native-fast-image';
+import { observer } from 'mobx-react';
 
 const Layout = styled.View`
 flex: 1;
 `;
 
-const Home = () => {
+const Home = observer(() => {
     
     const initialize = async () => {
         const response = await testApiService.getPhoto({ _start: 0, _limit: 5 });
@@ -27,7 +28,7 @@ const Home = () => {
         <Layout>
             <Text>홈 페이지</Text>
             
-            {/* { publicStore.photoList[0].url && (
+            { publicStore.photoList[0].url && (
                 <FastImage
                     source={{ uri: publicStore.photoList[0]?.url }}
                     style={{
@@ -35,9 +36,9 @@ const Home = () => {
                         height: 200,
                     }}
                 />
-            )} */}
+            )}
         </Layout>
     );
-};
+});
 
 export default Home;
