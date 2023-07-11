@@ -7,7 +7,7 @@ const BottomTab = createBottomTabNavigator<AppTabParamList>();
 
 const AppBottomTab = observer(() => {
     return (
-        <BottomTab.Navigator initialRouteName='Home'>
+        <BottomTab.Navigator initialRouteName='Vertical'>
             { Object.entries({ ...AppTabDef }).map(([ name, { initialParams, component } ]) => (
                 <BottomTab.Screen
                     key={name}

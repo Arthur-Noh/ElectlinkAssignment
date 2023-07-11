@@ -1,20 +1,20 @@
-import Home from '../pages/home';
-import Tab1 from '../pages/tab1';
+import Vertical from '../pages/vertical';
+import Horizon from '../pages/horizon';
 import Tab2 from '../pages/tab2';
 
 // Home
-const HomeScreens = {
-    Home: {
+const VerticalScreens = {
+    Vertical: {
         initialParams: {},
-        component: Home,
+        component: Vertical,
     },
 };
 
 // Tab1
-const Tab1Screens = {
-    Tab1: {
+const HorizonScreens = {
+    Horizon: {
         initialParams: {},
-        component: Tab1,
+        component: Horizon,
     },
 };
 
@@ -31,15 +31,15 @@ type defaultParam = {
 };
 
 export type AppTabParamList = {
-    Home: defaultParam,
+    Vertical: defaultParam,
 
-    Tab1: defaultParam,
+    Horizon: defaultParam,
 
     Tab2: defaultParam,
 };
 
 export const AppTabDef = {
-    ...HomeScreens,
-    ...Tab1Screens,
+    ...VerticalScreens,
+    ...HorizonScreens,
     ...Tab2Screens,
 };

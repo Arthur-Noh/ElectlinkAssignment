@@ -60,7 +60,7 @@ interface IListCard {
     onPress: () => void;
 }
 
-const ListCard: React.FC<IListCard> = observer((props) => {
+const VerticalCard: React.FC<IListCard> = observer((props) => {
     return (
         <Layout>
             <ImageView>
@@ -88,4 +88,4 @@ const ListCard: React.FC<IListCard> = observer((props) => {
     );
 });
 
-export default ListCard;
+export default VerticalCard;

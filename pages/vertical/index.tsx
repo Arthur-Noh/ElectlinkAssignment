@@ -5,7 +5,7 @@ import publicStore from '../../stores/publicStore';
 import { observer } from 'mobx-react';
 import styled from 'styled-components/native';
 import { Palette } from '../../theme/styles/palette';
-import ListCard from '../../components/atoms/listCard';
+import VerticalCard from '../../components/atoms/verticalCard';
 import { Typography } from '../../theme/styles/typography';
 import { scaler } from '../../helpers/scaler';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
@@ -39,7 +39,7 @@ background-color: ${Palette.white.base};
 padding: ${scaler(24)}px;
 `;
 
-const Home = observer(() => {
+const Vertical = observer(() => {
     const [ topLoading, setTopLoading ] = useState<boolean>(false);
     const [ bottomLoading, setBottomLoading ] = useState<boolean>(false);
 
@@ -83,7 +83,7 @@ const Home = observer(() => {
 
         return (
             <CardView>
-                <ListCard
+                <VerticalCard
                     title={item.id}
                     subTitle={item.albumId}
                     imageUrl={item.thumbnailUrl}
@@ -130,4 +130,4 @@ const Home = observer(() => {
     );
 });
 
-export default Home;
+export default Vertical;
