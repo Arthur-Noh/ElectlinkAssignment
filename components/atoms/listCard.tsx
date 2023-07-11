@@ -80,7 +80,7 @@ const ListCard: React.FC<IListCard> = observer((props) => {
             <ContentView>
                 <TitleView>
                     <Title>{`아이디 : ${props.title}`}</Title>
-                    <SubTitle>{`앨범 ${props.title}.`}</SubTitle>
+                    <SubTitle>{`앨범 ${props.subTitle}.`}</SubTitle>
                 </TitleView>
                 <Description>{'accusamus beatae ad facilis cum similique qui sunt'}</Description>
             </ContentView>

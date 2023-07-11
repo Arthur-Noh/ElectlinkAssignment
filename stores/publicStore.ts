@@ -21,7 +21,10 @@ class PublicStore {
             photoList: observable,
 
             setHostUrl: action.bound,
+            setPhotoList: action.bound,
+
             addPhotoList: action.bound,
+
             clear: action.bound,
         });
     };
@@ -29,6 +32,12 @@ class PublicStore {
     setHostUrl(url: string) {
         runInAction(() => {
             this.hostUrl = url;
+        });
+    }
+
+    setPhotoList(data: Array<PhotoDataDTO>) {
+        runInAction(() => {
+            this.photoList = data;
         });
     }
 

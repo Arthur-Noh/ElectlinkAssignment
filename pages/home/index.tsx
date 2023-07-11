@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import { FlatList, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList } from 'react-native';
 import testApiService from '../../services/testApiService';
 import publicStore from '../../stores/publicStore';
-import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react';
 import styled from 'styled-components/native';
 import { Palette } from '../../theme/styles/palette';
 import ListCard from '../../components/atoms/listCard';
 import { Typography } from '../../theme/styles/typography';
-import Loader from '../../components/atoms/loader';
 import { scaler } from '../../helpers/scaler';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import loaderStore from '../../stores/modalStore/loaderStore';
@@ -16,7 +14,7 @@ import loaderStore from '../../stores/modalStore/loaderStore';
 const Layout = styled.View`
 flex: 1;
 background-color: ${Palette.white.base};
-padding: 10px;
+padding: ${scaler(12)}px ${scaler(12)}px 0 ${scaler(12)}px;
 `;
 
 const TitleView = styled.View`
@@ -30,38 +28,84 @@ font-weight: ${Typography.weight.bold};
 color: ${Palette.black.base};
 `;
 
+// 카드 뷰
+const CardView = styled.View`
+margin-bottom: ${scaler(12)}px;
+`;
+
+// 하단 도달시 로딩 화면 뷰
+const BottomLoading = styled.View`
+background-color: ${Palette.white.base};
+padding: ${scaler(24)}px;
+`;
+
 const Home = observer(() => {
-    
-    const initialize = async () => {
+    const [ topLoading, setTopLoading ] = useState<boolean>(false);
+    const [ bottomLoading, setBottomLoading ] = useState<boolean>(false);
+
+    const initialize = async (initLoading?: boolean) => {
         try {
-            loaderStore.setLoading(true);
+            if (initLoading) { // 초기 화면 로드시
+                loaderStore.setLoading(true);
+            } else {  // 새로고침 시
+                setTopLoading(true);
+            }
             const response = await testApiService.getPhoto({ _start: 0, _limit: 10 });
             if (response) {
                 // console.log('response =>', response);
-                publicStore.addPhotoList(response);
+                publicStore.setPhotoList(response);
             }
             loaderStore.setLoading(false);
+            setTopLoading(false);
         } catch (error: any) {
             loaderStore.setLoading(false);
-            console.log('[Error] Home,', error);
+            setTopLoading(false);
+            console.log('[Error] Home initialize,', error);
         }
     };
+
+    const getNextData = async (start: number) => {
+        try {
+            setBottomLoading(true);
+            const response = await testApiService.getPhoto({ _start: start, _limit: 10 });
+            if (response) {
+                publicStore.addPhotoList(response);
+            }
+            setBottomLoading(false);
+        } catch (error: any) {
+            setBottomLoading(false);
+            console.log('[Error] Home getNextData,', error);
+        }
+    }
 
     const renderList = (data: { item: PhotoDataDTO, index: number }) => {
         const { item, index } = data;
 
         return (
-            <ListCard
-                title={item.id}
-                subTitle={item.albumId}
-                imageUrl={item.thumbnailUrl}
-                onPress={() => console.log('카드가 눌렸소')}
-            />
+            <CardView>
+                <ListCard
+                    title={item.id}
+                    subTitle={item.albumId}
+                    imageUrl={item.thumbnailUrl}
+                    onPress={() => console.log('카드가 눌렸소')}
+                />
+            </CardView>
         )
     }
 
+    const renderFooter = () => {
+        if (!bottomLoading) {
+            return undefined;
+        }
+        return (
+            <BottomLoading>
+                <ActivityIndicator/>
+            </BottomLoading>
+        );
+    };
+
     useEffect(() => {
-        initialize();
+        initialize(true);
     }, []);
 
     return (
@@ -74,6 +118,13 @@ const Home = observer(() => {
                 keyExtractor={(item, index) => `${item.albumId}-${item.id}-${index}`}
                 renderItem={renderList}
                 contentContainerStyle={{ backgroundColor: 'white' }}
+                // 상단 당겨서 새로고침
+                refreshing={topLoading}
+                onRefresh={async () => await initialize()}
+                // 무한 스크롤 부분
+                onEndReached={async () => await getNextData(publicStore.photoList.length)}
+                onEndReachedThreshold={0} // 보일 수 있게 편의상 0으로 설정, 자연스러운건 0.2~0.3 이 적절함
+                ListFooterComponent={renderFooter()}
             />
         </Layout>
     );
