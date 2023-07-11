@@ -1,10 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AppTabDef, AppTabParamList } from './routeDef';
+import { observer } from 'mobx-react';
 
 const BottomTab = createBottomTabNavigator<AppTabParamList>(); 
 
-const AppBottomTab = () => {
+const AppBottomTab = observer(() => {
     return (
         <BottomTab.Navigator initialRouteName='Home'>
             { Object.entries({ ...AppTabDef }).map(([ name, { initialParams, component } ]) => (
@@ -18,6 +19,6 @@ const AppBottomTab = () => {
             ))}
         </BottomTab.Navigator>
     );
-};
+});
 
 export default AppBottomTab;

@@ -35,3 +35,10 @@ export const primary: IPrimary = {
     base: '#564F97',
     100: '#EFE9F3',
 };
+
+export const Palette = {
+    white,
+    black,
+    gray,
+    primary,
+};

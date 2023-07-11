@@ -20,7 +20,7 @@ export interface ITypography {
     };
 }
 
-export const typography: ITypography = {
+export const Typography: ITypography = {
     weight: {
         regular: '400',
         medium: '500',

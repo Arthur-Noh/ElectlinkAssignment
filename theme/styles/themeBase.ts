@@ -1,4 +1,4 @@
-import { typography } from './typography';
+import { Typography } from './typography';
 import { white, black, gray, primary } from './palette';
 import { scaler } from '../../helpers/scaler';
 
@@ -18,8 +18,17 @@ const base = {
     largeRadius: scaler(12),
 };
 
+export const Base = {
+    smallPadding: scaler(12),
+    mediumPadding: scaler(18),
+    largePadding: scaler(24),
+    smallRadius: scaler(4),
+    mediumRadius: scaler(8),
+    largeRadius: scaler(12),
+};
+
 export default {
     colors,
     base,
-    typography,
+    typography: Typography,
 };
