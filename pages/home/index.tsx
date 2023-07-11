@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { Text } from 'react-native';
-import { styled } from 'styled-components/native';
 import testApiService from '../../services/testApiService';
 import publicStore from '../../stores/publicStore';
 import FastImage from 'react-native-fast-image';
 import { observer } from 'mobx-react';
+import styled from 'styled-components/native';
 
 const Layout = styled.View`
 flex: 1;
 `;
+
+
 
 const Home = observer(() => {
     
