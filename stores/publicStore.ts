@@ -7,7 +7,7 @@ interface IPublicStore {
 }
 
 const initialState: IPublicStore = {
-    hostUrl: '',
+    hostUrl: 'https://jsonplaceholder.typicode.com/photos',
     photoList: [],
 };
 

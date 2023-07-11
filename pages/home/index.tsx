@@ -28,7 +28,7 @@ const Home = observer(() => {
         <Layout>
             <Text>홈 페이지</Text>
             
-            { publicStore.photoList[0].url && (
+            { publicStore.photoList[0]?.url && (
                 <FastImage
                     source={{ uri: publicStore.photoList[0]?.url }}
                     style={{
