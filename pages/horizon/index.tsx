@@ -9,12 +9,25 @@ import publicStore from '../../stores/publicStore';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import useDebounce from '../../hooks/useDebounce';
 import testApiService from '../../services/testApiService';
+import { Typography } from '../../theme/styles/typography';
 
 const Layout = styled.View`
 flex: 1;
 background-color: ${Palette.white.base};
 padding: ${scaler(12)}px ${scaler(12)}px 0 ${scaler(12)}px;
 `;
+
+const TitleView = styled.View`
+align-items: center;
+margin-bottom: ${scaler(16)}px;
+`;
+
+const Title = styled.Text`
+font-size: ${Typography.size.l1}px;
+font-weight: ${Typography.weight.bold};
+color: ${Palette.black.base};
+`;
+
 
 // 카드 뷰
 const CardView = styled.View`
@@ -95,6 +108,9 @@ const Horizon = () => {
 
     return (
         <Layout>
+            <TitleView>
+                <Title>가로형 무한 스크롤 구현</Title>
+            </TitleView>
             <FlatList
                 ref={flatListRef}
                 data={publicStore.photoList}

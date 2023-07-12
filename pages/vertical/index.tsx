@@ -10,7 +10,6 @@ import { Typography } from '../../theme/styles/typography';
 import { scaler } from '../../helpers/scaler';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import loaderStore from '../../stores/modalStore/loaderStore';
-import Lottie from 'lottie-react-native';
 
 const Layout = styled.View`
 flex: 1;
