@@ -58,7 +58,7 @@ interface IListCard {
     subTitle: number;
     description?: string;
     imageUrl?: string;
-    onPress: () => void;
+    onPress?: () => void;
 }
 
 const VerticalCard: React.FC<IListCard> = observer((props) => {

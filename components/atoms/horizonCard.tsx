@@ -58,7 +58,7 @@ interface IHorizonCard {
     subTitle: number;
     description?: string;
     imageUrl?: string;
-    onPress: () => void;
+    onPress?: () => void;
 }
 
 const HorizonCard: React.FC<IHorizonCard> = observer((props) => {
