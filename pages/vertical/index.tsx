@@ -86,6 +86,7 @@ const Vertical = observer(() => {
                 <VerticalCard
                     title={item.id}
                     subTitle={item.albumId}
+                    description={item.title}
                     imageUrl={item.thumbnailUrl}
                     onPress={() => console.log('카드가 눌렸소')}
                 />

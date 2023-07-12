@@ -56,6 +56,7 @@ color: ${Palette.gray[200]};
 interface IListCard {
     title: number;
     subTitle: number;
+    description?: string;
     imageUrl?: string;
     onPress: () => void;
 }
@@ -82,7 +83,7 @@ const VerticalCard: React.FC<IListCard> = observer((props) => {
                     <Title>{`아이디 : ${props.title}`}</Title>
                     <SubTitle>{`앨범 ${props.subTitle}.`}</SubTitle>
                 </TitleView>
-                <Description>{'accusamus beatae ad facilis cum similique qui sunt'}</Description>
+                <Description>{props.description}</Description>
             </ContentView>
         </Layout>
     );

@@ -4,10 +4,11 @@ import Lottie from 'lottie-react-native';
 import { Palette } from '../../theme/styles/palette';
 import { scaler } from '../../helpers/scaler';
 import HorizonCard from '../../components/atoms/horizonCard';
-import { Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import publicStore from '../../stores/publicStore';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import useDebounce from '../../hooks/useDebounce';
+import testApiService from '../../services/testApiService';
 
 const Layout = styled.View`
 flex: 1;
@@ -15,7 +16,18 @@ background-color: ${Palette.white.base};
 padding: ${scaler(12)}px ${scaler(12)}px 0 ${scaler(12)}px;
 `;
 
+// 카드 뷰
+const CardView = styled.View`
+`;
+
+// 하단 도달시 로딩 화면 뷰
+const BottomLoading = styled.View`
+background-color: ${Palette.white.base};
+padding: ${scaler(24)}px;
+`;
+
 const Horizon = () => {
+    const [ bottomLoading, setBottomLoading ] = useState<boolean>(false);
     const flatListRef = useRef<FlatList>(null);
 
     const Animation = () => {
@@ -32,12 +44,15 @@ const Horizon = () => {
         const { item, index } = data;
 
         return (
-            <HorizonCard
-                title={item.id}
-                subTitle={item.albumId}
-                imageUrl={item.url}
-                onPress={() => console.log('카드가 눌렷삼')}
-            />
+            <CardView>
+                <HorizonCard
+                    title={item.id}
+                    subTitle={item.albumId}
+                    description={item.title}
+                    imageUrl={item.url}
+                    onPress={() => console.log('카드가 눌렷삼')}
+                />
+            </CardView>
         );
     };
 
@@ -53,10 +68,37 @@ const Horizon = () => {
         const pageNumber = Math.ceil(contentOffset.x / viewSize.width);
 
         // 다음 페이지로 이동
-        if (publicStore.photoList.length > pageNumber + 1) {
-            scrollToItem(pageNumber + 1);
-        }
+        // if (publicStore.photoList.length > pageNumber + 1) {
+        //     scrollToItem(pageNumber + 1);
+        // }
+        scrollToItem(pageNumber + 1);
     };
+
+    const renderFooter = () => {
+        if (!bottomLoading) {
+            return undefined;
+        }
+        return (
+            <BottomLoading>
+                <ActivityIndicator />
+            </BottomLoading>
+        );
+    };
+
+    const getNextData = async (start: number) => {
+        try {
+            setBottomLoading(true);
+            console.log('시작지점 =>', start);
+            const response = await testApiService.getPhoto({ _start: start, _limit: 10 });
+            if (response) {
+                publicStore.addPhotoList(response);
+            }
+            setBottomLoading(false);
+        } catch (error: any) {
+            setBottomLoading(false);
+            console.log('[Error] Home getNextData,', error);
+        }
+    }
 
     useEffect(() => {
         scrollToItem(1);
@@ -72,6 +114,17 @@ const Horizon = () => {
                 pagingEnabled
                 horizontal
                 onMomentumScrollEnd={onScrollEnd}
+                // 무한 스크롤 부분
+                onEndReached={async () => await getNextData(publicStore.photoLength)}
+                onEndReachedThreshold={0} // 보일 수 있게 편의상 0으로 설정, 자연스러운건 0.2~0.3 이 적절함
+                ListFooterComponent={renderFooter()}
+                // 스크롤 실패시
+                onScrollToIndexFailed={info => {
+                    const wait = new Promise(resolve => setTimeout(resolve, 500));
+                    wait.then(() => {
+                        flatListRef.current?.scrollToIndex({ index: info.index, animated: false })
+                    });
+                }}
             />
         </Layout>
     );

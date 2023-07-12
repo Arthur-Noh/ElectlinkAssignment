@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { PhotoDataDTO } from '../interfaces/testDTO';
 
 interface IPublicStore {
@@ -26,8 +26,9 @@ class PublicStore {
 
             setHostUrl: action.bound,
             setPhotoList: action.bound,
-
             addPhotoList: action.bound,
+
+            photoLength: computed,
 
             clear: action.bound,
         });
@@ -53,8 +54,15 @@ class PublicStore {
 
     addPhotoList(data: Array<PhotoDataDTO>) {
         runInAction(() => {
-            this.photoList.push(...data);
+            this.photoList = [
+                ...this.photoList,
+                ...data,
+            ];
         });
+    }
+    
+    get photoLength() {
+        return this.photoList.length;
     }
 
     clear() {
