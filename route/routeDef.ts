@@ -2,7 +2,7 @@ import Vertical from '../pages/vertical';
 import Horizon from '../pages/horizon';
 import Action from '../pages/action';
 
-// Home
+// 세로 무한 스크롤 페이지
 const VerticalScreens = {
     Vertical: {
         initialParams: {},
@@ -10,7 +10,7 @@ const VerticalScreens = {
     },
 };
 
-// Tab1
+// 가로 무한 스크롤 페이지
 const HorizonScreens = {
     Horizon: {
         initialParams: {},
@@ -18,7 +18,7 @@ const HorizonScreens = {
     },
 };
 
-// Tab2
+// 애니메이션 페이지
 const ActionScreens = {
     Action: {
         initialParams: {},

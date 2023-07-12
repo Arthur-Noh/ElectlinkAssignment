@@ -4,12 +4,14 @@ export interface IWhite {
 
 export interface IBlack {
     base: string;
+    100: string;
 }
 
 export interface IGray {
     base: string;
     100: string;
     200: string;
+    300: string;
 }
 
 export interface IPrimary {
@@ -23,10 +25,12 @@ export const white: IWhite = {
 
 export const black: IBlack = {
     base: '#0E0D0F',
+    100: '#111112',
 };
 
 export const gray: IGray = {
     base: '#8D8F91',
+    300: '#BEC3C7',
     200: '#C1C3C9',
     100: '#F1F2F3',
 };

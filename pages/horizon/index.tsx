@@ -4,7 +4,7 @@ import Lottie from 'lottie-react-native';
 import { Palette } from '../../theme/styles/palette';
 import { scaler } from '../../helpers/scaler';
 import HorizonCard from '../../components/atoms/horizonCard';
-import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import publicStore from '../../stores/publicStore';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import useDebounce from '../../hooks/useDebounce';
@@ -27,7 +27,6 @@ font-size: ${Typography.size.l1}px;
 font-weight: ${Typography.weight.bold};
 color: ${Palette.black.base};
 `;
-
 
 // 카드 뷰
 const CardView = styled.View`

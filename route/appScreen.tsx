@@ -10,7 +10,7 @@ const AppScreen: React.FC = observer(() => {
         <SafeAreaView style={{ flex: 1 }}>
             <AppBottomTab />
 
-            {/* API loading view */}
+            {/* 전역 API 로딩바 */}
             { loaderStore.loading && <Loader/> }
         </SafeAreaView>
     );
