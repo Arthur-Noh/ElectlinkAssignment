@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import Lottie from 'lottie-react-native';
 import { Palette } from '../../theme/styles/palette';
 import { scaler } from '../../helpers/scaler';
 import HorizonCard from '../../components/atoms/horizonCard';
-import { ActivityIndicator, Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import publicStore from '../../stores/publicStore';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import useDebounce from '../../hooks/useDebounce';
@@ -29,16 +29,6 @@ padding: ${scaler(24)}px;
 const Horizon = () => {
     const [ bottomLoading, setBottomLoading ] = useState<boolean>(false);
     const flatListRef = useRef<FlatList>(null);
-
-    const Animation = () => {
-        return (
-            <Lottie
-                source={require('../../assets/animation/Lottie.json')}
-                autoPlay
-                // loop
-            />
-        );
-    }
 
     const renderList = (data: {item: PhotoDataDTO, index: number }) => {
         const { item, index } = data;
@@ -67,7 +57,7 @@ const Horizon = () => {
         const viewSize = e.nativeEvent.layoutMeasurement;
         const pageNumber = Math.ceil(contentOffset.x / viewSize.width);
 
-        // 다음 페이지로 이동
+        // 길이를 제한할 필요가 있을 때
         // if (publicStore.photoList.length > pageNumber + 1) {
         //     scrollToItem(pageNumber + 1);
         // }
@@ -88,7 +78,6 @@ const Horizon = () => {
     const getNextData = async (start: number) => {
         try {
             setBottomLoading(true);
-            console.log('시작지점 =>', start);
             const response = await testApiService.getPhoto({ _start: start, _limit: 10 });
             if (response) {
                 publicStore.addPhotoList(response);

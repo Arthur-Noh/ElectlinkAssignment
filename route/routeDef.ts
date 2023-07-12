@@ -1,6 +1,6 @@
 import Vertical from '../pages/vertical';
 import Horizon from '../pages/horizon';
-import Tab2 from '../pages/tab2';
+import Action from '../pages/action';
 
 // Home
 const VerticalScreens = {
@@ -19,10 +19,10 @@ const HorizonScreens = {
 };
 
 // Tab2
-const Tab2Screens = {
-    Tab2: {
+const ActionScreens = {
+    Action: {
         initialParams: {},
-        component: Tab2,
+        component: Action,
     },
 };
 
@@ -35,11 +35,11 @@ export type AppTabParamList = {
 
     Horizon: defaultParam,
 
-    Tab2: defaultParam,
+    Action: defaultParam,
 };
 
 export const AppTabDef = {
     ...VerticalScreens,
     ...HorizonScreens,
-    ...Tab2Screens,
+    ...ActionScreens,
 };
