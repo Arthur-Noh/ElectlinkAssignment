@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 import testApiService from '../../services/testApiService';
 import publicStore from '../../stores/publicStore';
 import { observer } from 'mobx-react';
@@ -10,7 +10,6 @@ import { Typography } from '../../theme/styles/typography';
 import { scaler } from '../../helpers/scaler';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import loaderStore from '../../stores/modalStore/loaderStore';
-import Dialogue from '../../components/atoms/dialogue';
 import BasicModal from '../../components/molecules/basicModal';
 
 const Layout = styled.View`
