@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import testApiService from '../../services/testApiService';
 import publicStore from '../../stores/publicStore';
 import { observer } from 'mobx-react';
@@ -10,6 +10,8 @@ import { Typography } from '../../theme/styles/typography';
 import { scaler } from '../../helpers/scaler';
 import { PhotoDataDTO } from '../../interfaces/testDTO';
 import loaderStore from '../../stores/modalStore/loaderStore';
+import Dialogue from '../../components/atoms/dialogue';
+import BasicModal from '../../components/molecules/basicModal';
 
 const Layout = styled.View`
 flex: 1;
@@ -40,6 +42,7 @@ padding: ${scaler(24)}px;
 `;
 
 const Vertical = observer(() => {
+    const [ visibleNotice, setVisibleNotice ] = useState<boolean>(true);
     const [ topLoading, setTopLoading ] = useState<boolean>(false);
     const [ bottomLoading, setBottomLoading ] = useState<boolean>(false);
 
@@ -111,6 +114,30 @@ const Vertical = observer(() => {
 
     return (
         <Layout>
+            <BasicModal
+                visible={visibleNotice}
+                title='Welcome!'
+                content={
+                    `제가 만든 앱을 작동시켜 주셔서 대단히 감사합니다\n` +
+                    `이 앱은 SK일렉링크 괴제용 어플리케이션입니다.\n\n` +
+
+                    `이 앱은 3가지 기능이 구현되어 있습니다.\n` +
+                    `1. 세로 무한 스크롤\n` +
+                    `2. 가로 무한 스크롤\n` +
+                    `3. lottie 애니메이션 적용\n\n` +
+
+                    `각 기능의 자세한 사항은 첨부된 Readme.md 문서를 참고해주세요.\n` +
+                    `이 모달은 앱을 구동 했을때만 출력됩니다.\n\n` +
+
+                    `다시 한번 제가 만든 앱을 실행시켜주셔서 정말 감사합니다.`
+                }
+                onPressConfirm={() => {
+                    setVisibleNotice(false);
+                }}
+                onPressBlur={() => {
+                    setVisibleNotice(false);
+                }}
+            />
             <TitleView>
                 <Title>세로형 무한 스크롤 구현</Title>
             </TitleView>
