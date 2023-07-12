@@ -1,22 +1,12 @@
-이 프로젝트는 SK Electlink 과제 입니다.
+<h1 align='center'>
+    <img src='./assets/logo/logo.png'></br>
+    SK Electlink Assignment
+</h1>
 
-# SK Electlink 과제
+이 프로젝트는 __SK 일렉링크__ 의 __사용자 앱 개발자__ 직무 지원 과제 입니다. 요구한 사항에 맞춰 가볍게 기능을 구현했습니다.
+과제 관련해서 자세한 사항은 하단 링크를 확인해주시면 감사하겠습니다.
 
-## 실행 방법
-## 1. 메트로 서버 켜기
-```bash
-root > npx react-native start --reset-cache
-```
+## Quick Links
 
-## 2. 사용하고자 하는 기기로 실행하기
-### For Android
-```bash
-# using Yarn
-root > yarn android
-```
-
-### For iOS
-```bash
-# sing Yarn
-root > yarn ios
-```
+- [RESULT.md](./documentation/RESULT.md)
+- [앱 실행 방법](./documentation/howToStart.md)
