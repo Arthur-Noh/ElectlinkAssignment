@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import Lottie from 'lottie-react-native';
 import Button from '../../components/atoms/button';
