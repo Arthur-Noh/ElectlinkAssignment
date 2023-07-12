@@ -41,10 +41,11 @@ padding: ${scaler(24)}px;
 `;
 
 const Vertical = observer(() => {
-    const [ visibleNotice, setVisibleNotice ] = useState<boolean>(true);
-    const [ topLoading, setTopLoading ] = useState<boolean>(false);
-    const [ bottomLoading, setBottomLoading ] = useState<boolean>(false);
+    const [ visibleNotice, setVisibleNotice ] = useState<boolean>(true); // 맨 처음 앱 방문 모달
+    const [ topLoading, setTopLoading ] = useState<boolean>(false); // 상단 새로고침 로딩바
+    const [ bottomLoading, setBottomLoading ] = useState<boolean>(false); // 하단 로딩바
 
+    // 처음 페이지 방문시 데이터를 로드합니다.
     const initialize = async (initLoading?: boolean) => {
         try {
             if (initLoading) { // 초기 화면 로드시
@@ -66,6 +67,7 @@ const Vertical = observer(() => {
         }
     };
 
+    // 다음 데이터를 불러옵니다.
     const getNextData = async (start: number) => {
         try {
             setBottomLoading(true);
@@ -80,6 +82,7 @@ const Vertical = observer(() => {
         }
     }
 
+    // 하단의 스크롤 할 리스트를 랜더링합니다.
     const renderList = (data: { item: PhotoDataDTO, index: number }) => {
         const { item, index } = data;
 
@@ -90,12 +93,13 @@ const Vertical = observer(() => {
                     subTitle={item.albumId}
                     description={item.title}
                     imageUrl={item.thumbnailUrl}
-                    onPress={() => console.log('카드가 눌렸소')}
+                    onPress={() => console.log('카드 눌렸을 때 기능을 붙여보세요.')}
                 />
             </CardView>
         )
     };
 
+    // 무한 스크롤 시 최하단의 로딩바를 표시합니다.
     const renderFooter = () => {
         if (!bottomLoading) {
             return undefined;
@@ -107,6 +111,7 @@ const Vertical = observer(() => {
         );
     };
 
+    // 페이지 첫 진입시 수행됩니다.
     useEffect(() => {
         initialize(true);
     }, []);
@@ -149,9 +154,9 @@ const Vertical = observer(() => {
                 refreshing={topLoading}
                 onRefresh={async () => await initialize()}
                 // 무한 스크롤 부분
-                onEndReached={async () => await getNextData(publicStore.photoList.length)}
-                onEndReachedThreshold={0} // 보일 수 있게 편의상 0으로 설정, 자연스러운건 0.2~0.3 이 적절함
-                ListFooterComponent={renderFooter()}
+                onEndReached={async () => await getNextData(publicStore.photoList.length)} // 최하단에 도달하면 호출
+                onEndReachedThreshold={0} // 로딩바가 보일 수 있게 편의상 0으로 설정, 자연스러운건 0.2 ~ 0.3 이 적절함
+                ListFooterComponent={renderFooter()} // 최하단 로딩바
             />
         </Layout>
     );

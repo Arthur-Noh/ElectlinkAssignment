@@ -8,6 +8,7 @@ const initialState: ILoaderStore = {
     loading: false,
 };
 
+// 전역 모달 스토어입니다. AppScreen.tsx 파일에서 쓰임을 볼 수 있습니다.
 class LoaderStore {
     loading = initialState.loading;
 

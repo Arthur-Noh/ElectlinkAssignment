@@ -7,7 +7,7 @@ import { scaler } from '../../helpers/scaler';
 import FastImage from 'react-native-fast-image';
 import { Typography } from '../../theme/styles/typography';
 
-const Layout = styled.View`
+const Layout = styled.Pressable`
 flex-direction: row;
 padding: ${Base.mediumPadding}px;
 background-color: ${Palette.gray[100]};
@@ -54,16 +54,17 @@ color: ${Palette.gray[200]};
 `;
 
 interface IListCard {
-    title: number;
-    subTitle: number;
-    description?: string;
-    imageUrl?: string;
-    onPress?: () => void;
+    title: number; // 카드 제목
+    subTitle: number; // 카드 부제목
+    description?: string; // 카드 설명
+    imageUrl?: string; // 카드 이미지 url
+    onPress?: () => void; // 카드를 눌렀을 때의 콜백 (만약 있다면)
 }
 
 const VerticalCard: React.FC<IListCard> = observer((props) => {
     return (
-        <Layout>
+        <Layout onPress={props.onPress}>
+            {/* 만약 이미지가 없다면 미리 준비한 빈 여백을 표기 */}
             <ImageView>
                 { props.imageUrl ? (
                     <FastImage

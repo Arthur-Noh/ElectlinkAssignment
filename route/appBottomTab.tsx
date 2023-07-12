@@ -22,6 +22,7 @@ height: ${scaler(30)}px;
 const BottomTab = createBottomTabNavigator<AppTabParamList>(); 
 
 const AppBottomTab = observer(() => {
+    // 하단부의 명칭 표기를 한글로 할 예정이라서 콜백 함수로 생성
     const tabName = useCallback((name: string) => {
         switch (name) {
             case 'Vertical':
@@ -39,6 +40,8 @@ const AppBottomTab = observer(() => {
         <BottomTab.Navigator
             initialRouteName='Vertical'
             screenOptions={({ route }) => ({
+                // 하단부의 선택된 탭의 이미지, 이름을 지정해야하기 때문에 옵션을 설정합니다.
+                // 영어로 된 이름을 임의로 한글로 바꿔서 ts ignore 처리했습니다.
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconSource: ImageSourcePropType = VerticalImage;
                     switch (route.name) {
@@ -63,6 +66,10 @@ const AppBottomTab = observer(() => {
                 tabBarInactiveTintColor: Palette.gray[300],
             })}
         >
+            {/* 
+                AppTabDef 에 만든 페이지를 정의만 하면
+                여기서 자동으로 Object.entries하여 탭 리스트에 추가하도록 개발했습니다.
+             */}
             { Object.entries({ ...AppTabDef }).map(([ name, { initialParams, component } ]) => (
                 <BottomTab.Screen
                     key={name}

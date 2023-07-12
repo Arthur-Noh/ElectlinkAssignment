@@ -27,15 +27,16 @@ height: ${({ imageSize }) => imageSize ? scaler(imageSize) : scaler(40)}px;
 `;
 
 interface IButton {
-    title?: string;
-    imageSource?: ImageSourcePropType;
-    imageSize?: number;
-    onPress?: () => void;
+    title?: string; // 버튼에 표시될 텍스트
+    imageSource?: ImageSourcePropType; // 버튼에 이미지를 넣는다면 보일 이미지
+    imageSize?: number; // 이미지의 특별히 사이즈를 삽입한다면 넣는 크기
+    onPress?: () => void; // 버튼을 눌렀을때의 콜백
 }
 
 const Button: React.FC<IButton> = observer((props) => {
     return (
         <Layout onPress={props.onPress}>
+            {/* 텍스트가 있던지, 이미지가 있던지 등 있을 때만 보이도록 개발 */}
             { props.title !== undefined && (
                 <Title>{props.title}</Title>
             )}

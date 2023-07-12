@@ -8,7 +8,7 @@ import FastImage from 'react-native-fast-image';
 import { Typography } from '../../theme/styles/typography';
 import { scaler } from '../../helpers/scaler';
 
-const Layout = styled.View`
+const Layout = styled.Pressable`
 padding: ${Base.mediumPadding}px;
 background-color: ${Palette.gray[100]};
 border-radius: ${Base.mediumRadius}px;
@@ -54,16 +54,17 @@ color: ${Palette.gray[200]};
 `;
 
 interface IHorizonCard {
-    title: number;
-    subTitle: number;
-    description?: string;
-    imageUrl?: string;
-    onPress?: () => void;
+    title: number; // 카드 제목
+    subTitle: number; // 카드 부제목
+    description?: string; // 카드 설명
+    imageUrl?: string; // 카드 이미지 url
+    onPress?: () => void; // 카드를 눌렀을 때의 콜백 (만약 있다면)
 }
 
 const HorizonCard: React.FC<IHorizonCard> = observer((props) => {
     return (
-        <Layout>
+        <Layout onPress={props.onPress}>
+            {/* 이미지가 만약 없다면 이미 준비해둔 빈 여백을 표기 */}
             <ImageView>
                 { props.imageUrl ? (
                     <FastImage

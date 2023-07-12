@@ -41,11 +41,12 @@ padding: ${scaler(24)}px;
 `;
 
 const Horizon = () => {
-    const [ currentIndex, setCurrentIndex ] = useState<number>(0);
-    const [ pauseScroll, setPauseScroll ] = useState<boolean>(false);
-    const [ bottomLoading, setBottomLoading ] = useState<boolean>(false);
+    const [ currentIndex, setCurrentIndex ] = useState<number>(0); // 현재 스크롤 될 카드의 인덱스
+    const [ pauseScroll, setPauseScroll ] = useState<boolean>(false); // 자동 스크롤 일시정지 여부
+    const [ bottomLoading, setBottomLoading ] = useState<boolean>(false); // 우측 로딩바
     const flatListRef = useRef<FlatList>(null);
 
+    // 우측의 스크롤 할 리스트를 랜더링합니다.
     const renderList = (data: {item: PhotoDataDTO, index: number }) => {
         const { item, index } = data;
 
@@ -56,18 +57,22 @@ const Horizon = () => {
                     subTitle={item.albumId}
                     description={item.title}
                     imageUrl={item.url}
-                    onPress={() => console.log('카드가 눌렷삼')}
+                    onPress={() => console.log('카드 눌렸을 때 기능을 붙여보세요.')}
                 />
             </CardView>
         );
     };
 
+    // 다음 스크롤 될 아이템으로 이동합니다.
+    // 단 debounce 커스텀 훅을 걸어서 동일한 요청이 들어왔을 때 이전 요청을 무시하고 수행할 수 있도록 개발했습니다.
     const scrollToItem = useCallback(
         useDebounce((index: number) => {
             flatListRef.current?.scrollToIndex({ animated: true, index });
         }, 3000), []
     );
 
+    // 스크롤이 완료 되었을때 호출하는 함수
+    // 현재 카드의 인덱스 설정과 자동으로 넘기는 역할을 수행합니다.
     const onScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         const contentOffset = e.nativeEvent.contentOffset;
         const viewSize = e.nativeEvent.layoutMeasurement;
@@ -87,6 +92,7 @@ const Horizon = () => {
         scrollToItem(pageNumber + 1);
     };
 
+    // 무한 스크롤 시 우측에 로딩바를 표시합니다.
     const renderFooter = () => {
         if (!bottomLoading) {
             return undefined;
@@ -98,6 +104,7 @@ const Horizon = () => {
         );
     };
 
+    // 다음 데이터를 불러옵니다.
     const getNextData = async (start: number) => {
         try {
             setBottomLoading(true);
@@ -112,6 +119,7 @@ const Horizon = () => {
         }
     };
 
+    // 자동 넘기기가 불편할 경우 정지버튼을 눌러 언제든지 정지할 수 있습니다.
     const stopScroll = () => {
         if (pauseScroll) {
             setPauseScroll(false);
@@ -147,6 +155,7 @@ const Horizon = () => {
                     onEndReachedThreshold={0} // 보일 수 있게 편의상 0으로 설정, 자연스러운건 0.2~0.3 이 적절함
                     ListFooterComponent={renderFooter()}
                     // 스크롤 실패시
+                    // 데이터가 없는데 스크롤을 시도하는 경우 오류가 발생할 수 있기에 방지합니다.
                     onScrollToIndexFailed={info => {
                         const wait = new Promise(resolve => setTimeout(resolve, 500));
                         wait.then(() => {
