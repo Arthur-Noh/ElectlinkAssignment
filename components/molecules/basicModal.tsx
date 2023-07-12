@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import Dialogue from '../atoms/dialogue';
+import Dialogue from './dialogue';
 import styled from 'styled-components/native';
 import { Typography } from '../../theme/styles/typography';
 import { scaler } from '../../helpers/scaler';

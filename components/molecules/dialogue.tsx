@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import { scaler } from '../../helpers/scaler';
 import { Palette } from '../../theme/styles/palette';
 import { Base } from '../../theme/styles/themeBase';
-import Button from './button';
+import Button from '../atoms/button';
 
 const Layout = styled.View`
 width: ${Dimensions.get('screen').width - 40}px;
